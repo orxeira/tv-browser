@@ -35,7 +35,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun navigateTo(tvShow: TvShow) {
         val intent = Intent(this, DetailActivity::class.java)
-        intent.putExtra(DetailActivity.TV_SHOW, it)
+        intent.putExtra(DetailActivity.TV_SHOW, tvShow)
         startActivity(intent)
     }
 }
