@@ -1,36 +1,30 @@
 package com.orxeira.tv_browser.ui.main
 
-import androidx.lifecycle.*
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.viewModelScope
 import com.orxeira.tv_browser.model.TvShow
 import com.orxeira.tv_browser.model.TvShowRepository
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 
 class MainViewModel(private val tvShowRepository: TvShowRepository) : ViewModel() {
 
-    private val _state = MutableLiveData(UiState())
-    val state: LiveData<UiState>
-        get() {
-        if(_state.value?.tvShows == null){
-            refresh()
-        }
-        return _state
-    }
+    private val _state = MutableStateFlow(UiState())
+    val state: StateFlow<UiState> = _state.asStateFlow()
 
-    private fun refresh(){
+    fun onUiReady() {
         viewModelScope.launch {
             _state.value = UiState(loading = true)
             _state.value = UiState(tvShows = tvShowRepository.findTopRatedShows().results)
         }
     }
 
-    fun onTvShowClicked(movie: TvShow){
-        _state.value = _state.value?.copy(navigateTo = movie)
-    }
-
     data class UiState(
         val loading: Boolean = false,
         val tvShows: List<TvShow>? = null,
-        val navigateTo: TvShow? = null
     )
 }
 

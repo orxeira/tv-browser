@@ -1,6 +1,5 @@
 package com.orxeira.tv_browser.ui.common
 
-
 import android.content.Context
 import android.util.AttributeSet
 import androidx.appcompat.widget.AppCompatImageView

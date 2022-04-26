@@ -28,8 +28,7 @@ class TvShowAdapter(private val listener: (TvShow) -> Unit) :
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         private val binding = ViewTvShowBinding.bind(view)
         fun bind(tvShow: TvShow) = with(binding) {
-            movieTitle.text = tvShow.name
-            movieCover.loadUrl("https://image.tmdb.org/t/p/w185/${tvShow.posterPath}")
+            binding.tvShow = tvShow
         }
     }
 }
