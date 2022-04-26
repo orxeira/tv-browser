@@ -7,15 +7,17 @@ import androidx.lifecycle.lifecycleScope
 import com.orxeira.tv_browser.R
 import com.orxeira.tv_browser.databinding.ActivityMainBinding
 import com.orxeira.tv_browser.model.TvShowRepository
+import com.orxeira.tv_browser.ui.detail.DetailActivity
 import kotlinx.coroutines.launch
 
 class MainActivity : AppCompatActivity() {
+
     private val moviesRepository by lazy { TvShowRepository(this) }
 
     private val adapter = TvShowAdapter {
-//        val intent = Intent(this, DetailActivity::class.java)
-//        intent.putExtra(DetailActivity.MOVIE, it)
-//        startActivity(intent)
+        val intent = Intent(this, DetailActivity::class.java)
+        intent.putExtra(DetailActivity.TV_SHOW, it)
+        startActivity(intent)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
