@@ -1,32 +1,36 @@
 package com.orxeira.tv_browser.ui.main
 
-import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import androidx.lifecycle.lifecycleScope
-import com.orxeira.tv_browser.R
+import androidx.activity.viewModels
+import androidx.appcompat.app.AppCompatActivity
 import com.orxeira.tv_browser.databinding.ActivityMainBinding
+import com.orxeira.tv_browser.model.TvShow
 import com.orxeira.tv_browser.model.TvShowRepository
-import kotlinx.coroutines.launch
+import com.orxeira.tv_browser.ui.common.visible
 
 class MainActivity : AppCompatActivity() {
-    private val moviesRepository by lazy { TvShowRepository(this) }
+    private val viewModel: MainViewModel by viewModels { MainViewModelFactory(TvShowRepository(this)) }
 
-    private val adapter = TvShowAdapter {
-//        val intent = Intent(this, DetailActivity::class.java)
-//        intent.putExtra(DetailActivity.MOVIE, it)
-//        startActivity(intent)
-    }
+    private val adapter = TvShowAdapter { viewModel.onTvShowClicked(it) }
+
+    private lateinit var binding: ActivityMainBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        val binding = ActivityMainBinding.inflate(layoutInflater)
+        binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
         binding.recycler.adapter = adapter
 
-        lifecycleScope.launch {
-            adapter.submitList(moviesRepository.findTopRatedShows().results)
-        }
+        viewModel.state.observe(this, ::updateUI)
+    }
+
+    private fun updateUI(state: MainViewModel.UiState) {
+        binding.progress.visible = state.loading
+        state.tvShows?.let(adapter::submitList)
+        state.navigateTo?.let(::navigateTo)
+    }
+
+    private fun navigateTo(tvShow: TvShow) {
     }
 }
