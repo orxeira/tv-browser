@@ -1,7 +1,7 @@
 package com.orxeira.tv_browser.ui.detail
 
-import android.annotation.SuppressLint
 import android.os.Bundle
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import com.orxeira.tv_browser.databinding.ActivityDetailBinding
 import com.orxeira.tv_browser.model.TvShow
@@ -12,20 +12,24 @@ class DetailActivity : AppCompatActivity() {
         const val TV_SHOW = "DetailActivity:tvshow"
     }
 
-    @SuppressLint("SetTextI18n")
+    private val viewModel: DetailViewModel by viewModels {
+        DetailViewModelFactory(requireNotNull(intent.getParcelableExtra(TV_SHOW)))
+    }
+
+    private lateinit var binding: ActivityDetailBinding
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        ActivityDetailBinding.inflate(layoutInflater).run {
-            setContentView(root)
+        binding = ActivityDetailBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
-            val tvShow = intent.getParcelableExtra<TvShow>(TV_SHOW) ?: throw IllegalStateException()
+        viewModel.state.observe(this) { updateUI(it.tvShow) }
+    }
 
-            movieDetailToolbar.title = tvShow.name
-
-            val background = tvShow.backdropPath ?: tvShow.posterPath
-            movieDetailImage.loadUrl("https://image.tmdb.org/t/p/w780$background")
-            movieDetailSummary.text = tvShow.overview
-        }
+    private fun updateUI(tvShow: TvShow) = with(binding) {
+        movieDetailToolbar.title = tvShow.name
+        movieDetailImage.loadUrl("https://image.tmdb.org/t/p/w780${tvShow.posterPath ?: tvShow.backdropPath}")
+        movieDetailSummary.text = tvShow.overview
     }
 }
