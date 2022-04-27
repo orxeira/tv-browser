@@ -5,15 +5,21 @@ import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.orxeira.tv_browser.R
+import com.orxeira.tv_browser.data.TvShowRepository
 import com.orxeira.tv_browser.databinding.FragmentMainBinding
-import com.orxeira.tv_browser.model.TvShowRepository
+import com.orxeira.tv_browser.usecases.GetPopularTvShowsUseCase
+import com.orxeira.tv_browser.usecases.RequestPopularTvShowsUseCase
 import com.orxeira.tv_browser.ui.common.app
 import com.orxeira.tv_browser.ui.common.launchAndCollect
 
 class MainFragment : Fragment(R.layout.fragment_main) {
 
     private val viewModel: MainViewModel by viewModels {
-        MainViewModelFactory(TvShowRepository(requireActivity().app))
+        val repository = TvShowRepository(requireActivity().app)
+        MainViewModelFactory(
+            GetPopularTvShowsUseCase(repository),
+            RequestPopularTvShowsUseCase(repository)
+        )
     }
 
     private lateinit var mainState: MainState

@@ -7,7 +7,8 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.navArgs
 import com.orxeira.tv_browser.R
 import com.orxeira.tv_browser.databinding.FragmentDetailBinding
-import com.orxeira.tv_browser.model.TvShowRepository
+import com.orxeira.tv_browser.data.TvShowRepository
+import com.orxeira.tv_browser.usecases.FindTvShowUseCase
 import com.orxeira.tv_browser.ui.common.app
 import com.orxeira.tv_browser.ui.common.launchAndCollect
 
@@ -16,9 +17,10 @@ class DetailFragment : Fragment(R.layout.fragment_detail) {
     private val safeArgs: DetailFragmentArgs by navArgs()
 
     private val viewModel: DetailViewModel by viewModels {
+        val repository = TvShowRepository(requireActivity().app)
         DetailViewModelFactory(
-            requireNotNull(safeArgs.tvShowId),
-            TvShowRepository(requireActivity().app)
+            safeArgs.tvShowId,
+            FindTvShowUseCase(repository)
         )
     }
 

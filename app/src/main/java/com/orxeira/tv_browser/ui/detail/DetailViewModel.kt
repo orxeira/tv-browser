@@ -3,16 +3,16 @@ package com.orxeira.tv_browser.ui.detail
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
-import com.orxeira.tv_browser.model.Error
-import com.orxeira.tv_browser.model.TvShowRepository
-import com.orxeira.tv_browser.model.database.TvShow
-import com.orxeira.tv_browser.model.toError
+import com.orxeira.tv_browser.data.Error
+import com.orxeira.tv_browser.data.toError
+import com.orxeira.tv_browser.domain.TvShow
+import com.orxeira.tv_browser.usecases.FindTvShowUseCase
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 
 class DetailViewModel(
     tvShowId: Int,
-    private val repository: TvShowRepository
+    findTvShowUseCase: FindTvShowUseCase
 ) : ViewModel() {
 
     data class UiState(val tvShow: TvShow? = null, val error: Error? = null)
@@ -22,7 +22,7 @@ class DetailViewModel(
 
     init {
         viewModelScope.launch {
-            repository.findById(tvShowId)
+            findTvShowUseCase(tvShowId)
                 .catch { cause -> _state.update { it.copy(error = cause.toError()) } }
                 .collect { tvShow ->
                     _state.update { UiState(tvShow) }
@@ -32,9 +32,12 @@ class DetailViewModel(
 }
 
 @Suppress("UNCHECKED_CAST")
-class DetailViewModelFactory(private val tvShowId: Int, private val repository: TvShowRepository) :
+class DetailViewModelFactory(
+    private val tvShowId: Int,
+    private val findMovieUseCase: FindTvShowUseCase
+) :
     ViewModelProvider.Factory {
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
-        return DetailViewModel(tvShowId, repository) as T
+        return DetailViewModel(tvShowId, findMovieUseCase) as T
     }
 }

@@ -1,11 +1,7 @@
-package com.orxeira.tv_browser.model.database
+package com.orxeira.tv_browser.domain
 
-import androidx.room.Entity
-import androidx.room.PrimaryKey
-
-@Entity
 data class TvShow(
-    @PrimaryKey(autoGenerate = true) val id: Int,
+    val id: Int,
     val name: String,
     val overview: String,
     val posterPath: String,

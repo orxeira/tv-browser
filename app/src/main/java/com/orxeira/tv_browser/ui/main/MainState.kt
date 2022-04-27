@@ -7,11 +7,11 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
 import com.orxeira.tv_browser.R
-import com.orxeira.tv_browser.model.database.TvShow
+import com.orxeira.tv_browser.domain.TvShow
 import com.orxeira.tv_browser.ui.detail.PermissionRequester
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
-import com.orxeira.tv_browser.model.Error
+import com.orxeira.tv_browser.data.Error
 
 fun Fragment.buildMainState(
     context: Context = requireContext(),

@@ -1,11 +1,11 @@
-package com.orxeira.tv_browser.model
+package com.orxeira.tv_browser.data
 
 import android.Manifest
 import android.app.Application
 import android.location.Geocoder
 import android.location.Location
-import com.orxeira.tv_browser.model.datasource.LocationDataSource
-import com.orxeira.tv_browser.model.datasource.PlayServicesLocationDataSource
+import com.orxeira.tv_browser.data.datasource.LocationDataSource
+import com.orxeira.tv_browser.framework.datasource.PlayServicesLocationDataSource
 
 class RegionRepository(application: Application) {
 

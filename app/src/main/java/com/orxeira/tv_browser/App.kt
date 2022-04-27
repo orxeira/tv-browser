@@ -2,7 +2,7 @@ package com.orxeira.tv_browser
 
 import android.app.Application
 import androidx.room.Room
-import com.orxeira.tv_browser.model.database.TvShowDatabase
+import com.orxeira.tv_browser.framework.database.TvShowDatabase
 
 class App : Application() {
 

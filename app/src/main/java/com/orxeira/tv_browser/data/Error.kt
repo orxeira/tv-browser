@@ -1,4 +1,4 @@
-package com.orxeira.tv_browser.model
+package com.orxeira.tv_browser.data
 
 import retrofit2.HttpException
 import java.io.IOException

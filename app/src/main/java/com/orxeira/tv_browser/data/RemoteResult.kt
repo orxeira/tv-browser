@@ -1,4 +1,4 @@
-package com.orxeira.tv_browser.model
+package com.orxeira.tv_browser.data
 
 import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
