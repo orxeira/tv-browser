@@ -3,16 +3,15 @@ package com.orxeira.tv_browser.ui.detail
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
-import com.orxeira.tv_browser.data.Error
-import com.orxeira.tv_browser.data.toError
-import com.orxeira.tv_browser.domain.TvShow
-import com.orxeira.tv_browser.usecases.FindTvShowUseCase
+import com.orxeira.domain.Error
+import com.orxeira.domain.TvShow
+import com.orxeira.tv_browser.framework.toError
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 
 class DetailViewModel(
     tvShowId: Int,
-    findTvShowUseCase: FindTvShowUseCase
+    findTvShowUseCase: com.orxeira.usecases.FindTvShowUseCase
 ) : ViewModel() {
 
     data class UiState(val tvShow: TvShow? = null, val error: Error? = null)
@@ -34,7 +33,7 @@ class DetailViewModel(
 @Suppress("UNCHECKED_CAST")
 class DetailViewModelFactory(
     private val tvShowId: Int,
-    private val findMovieUseCase: FindTvShowUseCase
+    private val findMovieUseCase: com.orxeira.usecases.FindTvShowUseCase
 ) :
     ViewModelProvider.Factory {
     override fun <T : ViewModel> create(modelClass: Class<T>): T {

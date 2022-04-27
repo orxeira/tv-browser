@@ -4,9 +4,9 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.orxeira.domain.TvShow
 import com.orxeira.tv_browser.R
 import com.orxeira.tv_browser.databinding.ViewTvShowBinding
-import com.orxeira.tv_browser.domain.TvShow
 import com.orxeira.tv_browser.ui.common.basicDiffUtil
 import com.orxeira.tv_browser.ui.common.inflate
 
@@ -26,7 +26,7 @@ class TvShowAdapter(private val listener: (TvShow) -> Unit) :
 
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         private val binding = ViewTvShowBinding.bind(view)
-        fun bind(tvShow: TvShow){
+        fun bind(tvShow: TvShow) {
             binding.tvShow = tvShow
         }
     }

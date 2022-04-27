@@ -6,12 +6,11 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
+import com.orxeira.domain.Error
 import com.orxeira.tv_browser.R
-import com.orxeira.tv_browser.domain.TvShow
 import com.orxeira.tv_browser.ui.detail.PermissionRequester
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
-import com.orxeira.tv_browser.data.Error
 
 fun Fragment.buildMainState(
     context: Context = requireContext(),
@@ -29,7 +28,7 @@ class MainState(
     private val navController: NavController,
     private val locationPermissionRequester: PermissionRequester
 ) {
-    fun onTvShowClicked(tvShow: TvShow) {
+    fun onTvShowClicked(tvShow: com.orxeira.domain.TvShow) {
         val action = MainFragmentDirections.actionMainToDetail(tvShow.id)
         navController.navigate(action)
     }

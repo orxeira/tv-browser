@@ -5,11 +5,11 @@
 
     <data>
 
-        <import type="com.orxeira.tv_browser.domain.TvShow" />
+        <import type="com.orxeira.domain.TvShow" />
 
         <variable
             name="tvShow"
-            type="TvShow" />
+            type="com.orxeira.domain.TvShow" />
     </data>
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout
