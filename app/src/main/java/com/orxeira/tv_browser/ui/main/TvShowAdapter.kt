@@ -4,12 +4,11 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.orxeira.domain.TvShow
 import com.orxeira.tv_browser.R
 import com.orxeira.tv_browser.databinding.ViewTvShowBinding
-import com.orxeira.tv_browser.model.TvShow
 import com.orxeira.tv_browser.ui.common.basicDiffUtil
 import com.orxeira.tv_browser.ui.common.inflate
-import com.orxeira.tv_browser.ui.common.loadUrl
 
 class TvShowAdapter(private val listener: (TvShow) -> Unit) :
     ListAdapter<TvShow, TvShowAdapter.ViewHolder>(basicDiffUtil { old, new -> old.id == new.id }) {
@@ -27,9 +26,8 @@ class TvShowAdapter(private val listener: (TvShow) -> Unit) :
 
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         private val binding = ViewTvShowBinding.bind(view)
-        fun bind(tvShow: TvShow) = with(binding) {
-            movieTitle.text = tvShow.name
-            movieCover.loadUrl("https://image.tmdb.org/t/p/w185/${tvShow.posterPath}")
+        fun bind(tvShow: TvShow) {
+            binding.tvShow = tvShow
         }
     }
 }

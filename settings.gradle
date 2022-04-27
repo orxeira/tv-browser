@@ -12,5 +12,8 @@ dependencyResolutionManagement {
         mavenCentral()
     }
 }
-rootProject.name = "tv-browser"
+rootProject.name = "Orxeira\'s TV"
 include ':app'
+include ':domain'
+include ':data'
+include ':usecases'

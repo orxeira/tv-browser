@@ -1,43 +1,52 @@
 package com.orxeira.tv_browser.ui.main
 
-import androidx.lifecycle.*
-import com.orxeira.tv_browser.model.TvShow
-import com.orxeira.tv_browser.model.TvShowRepository
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.viewModelScope
+import com.orxeira.domain.Error
+import com.orxeira.domain.TvShow
+import com.orxeira.tv_browser.framework.toError
+import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 
-class MainViewModel(private val tvShowRepository: TvShowRepository) : ViewModel() {
+class MainViewModel(
+    getPopularTvShowsUseCase: com.orxeira.usecases.GetPopularTvShowsUseCase,
+    private val requestPopularTvShowsUseCase: com.orxeira.usecases.RequestPopularTvShowsUseCase
+) : ViewModel() {
 
-    private val _state = MutableLiveData(UiState())
-    val state: LiveData<UiState>
-        get() {
-        if(_state.value?.tvShows == null){
-            refresh()
-        }
-        return _state
-    }
+    private val _state = MutableStateFlow(UiState())
+    val state: StateFlow<UiState> = _state.asStateFlow()
 
-    private fun refresh(){
+    init {
         viewModelScope.launch {
-            _state.value = UiState(loading = true)
-            _state.value = UiState(tvShows = tvShowRepository.findTopRatedShows().results)
+            getPopularTvShowsUseCase()
+                .catch { cause -> _state.update { it.copy(error = cause.toError()) } }
+                .collect { tvShows -> _state.update { UiState(tvShows = tvShows) } }
         }
     }
 
-    fun onTvShowClicked(movie: TvShow){
-        _state.value = _state.value?.copy(navigateTo = movie)
+    fun onUiReady() {
+        viewModelScope.launch {
+            _state.value = _state.value.copy(loading = true)
+            val error = requestPopularTvShowsUseCase()
+            _state.update { _state.value.copy(loading = false, error = error) }
+        }
     }
 
     data class UiState(
         val loading: Boolean = false,
         val tvShows: List<TvShow>? = null,
-        val navigateTo: TvShow? = null
+        val error: Error? = null
     )
 }
 
 @Suppress("UNCHECKED_CAST")
-class MainViewModelFactory(private val tvShowRepository: TvShowRepository) :
+class MainViewModelFactory(
+    private val getPopularTvShowsUseCase: com.orxeira.usecases.GetPopularTvShowsUseCase,
+    private val requestPopularTvShowsUseCase: com.orxeira.usecases.RequestPopularTvShowsUseCase
+) :
     ViewModelProvider.Factory {
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
-        return MainViewModel(tvShowRepository) as T
+        return MainViewModel(getPopularTvShowsUseCase, requestPopularTvShowsUseCase) as T
     }
 }
