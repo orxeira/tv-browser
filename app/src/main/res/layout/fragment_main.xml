@@ -7,7 +7,7 @@
 
         <import type="java.util.List" />
 
-        <import type="com.orxeira.tv_browser.model.TvShow" />
+        <import type="com.orxeira.tv_browser.model.database.TvShow" />
 
         <variable
             name="loading"

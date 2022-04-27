@@ -7,7 +7,8 @@ interface RemoteService {
 
     @GET("tv/top_rated")
     suspend fun listTopRatedTvShows(
-        @Query("api_key") apiKey: String
+        @Query("api_key") apiKey: String,
+        @Query("language") language: String
     ): RemoteResult
 
 }

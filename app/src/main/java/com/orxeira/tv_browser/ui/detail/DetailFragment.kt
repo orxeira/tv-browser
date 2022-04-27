@@ -10,6 +10,8 @@ import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.navArgs
 import com.orxeira.tv_browser.R
 import com.orxeira.tv_browser.databinding.FragmentDetailBinding
+import com.orxeira.tv_browser.model.TvShowRepository
+import com.orxeira.tv_browser.ui.common.app
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 
@@ -18,7 +20,10 @@ class DetailFragment : Fragment(R.layout.fragment_detail) {
     private val safeArgs: DetailFragmentArgs by navArgs()
 
     private val viewModel: DetailViewModel by viewModels {
-        DetailViewModelFactory(requireNotNull(safeArgs.tvShow))
+        DetailViewModelFactory(
+            requireNotNull(safeArgs.tvShowId),
+            TvShowRepository(requireActivity().app)
+        )
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

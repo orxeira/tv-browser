@@ -2,23 +2,38 @@ package com.orxeira.tv_browser.ui.detail
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.orxeira.tv_browser.model.TvShow
+import androidx.lifecycle.viewModelScope
+import com.orxeira.tv_browser.model.TvShowRepository
+import com.orxeira.tv_browser.model.database.TvShow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.launch
 
-class DetailViewModel(tvShow: TvShow) : ViewModel() {
+class DetailViewModel(
+    tvShowId: Int,
+    private val repository: TvShowRepository
+) : ViewModel() {
 
-    class UiState(val tvShow: TvShow)
+    init {
+        viewModelScope.launch {
+            repository.findById(tvShowId).collect {
+                _state.value = UiState(it)
+            }
+        }
+    }
 
-    private val _state = MutableStateFlow(UiState(tvShow))
+    class UiState(val tvShow: TvShow? = null)
+
+    private val _state = MutableStateFlow(UiState())
     val state: StateFlow<UiState> = _state.asStateFlow()
 }
 
 @Suppress("UNCHECKED_CAST")
-class DetailViewModelFactory(private val tvShow: TvShow) :
+class DetailViewModelFactory(private val tvShowId: Int, private val repository: TvShowRepository) :
     ViewModelProvider.Factory {
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
-        return DetailViewModel(tvShow) as T
+        return DetailViewModel(tvShowId, repository) as T
     }
 }

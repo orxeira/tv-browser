@@ -6,10 +6,9 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.orxeira.tv_browser.R
 import com.orxeira.tv_browser.databinding.ViewTvShowBinding
-import com.orxeira.tv_browser.model.TvShow
+import com.orxeira.tv_browser.model.database.TvShow
 import com.orxeira.tv_browser.ui.common.basicDiffUtil
 import com.orxeira.tv_browser.ui.common.inflate
-import com.orxeira.tv_browser.ui.common.loadUrl
 
 class TvShowAdapter(private val listener: (TvShow) -> Unit) :
     ListAdapter<TvShow, TvShowAdapter.ViewHolder>(basicDiffUtil { old, new -> old.id == new.id }) {

@@ -7,12 +7,13 @@ import androidx.fragment.app.viewModels
 import com.orxeira.tv_browser.R
 import com.orxeira.tv_browser.databinding.FragmentMainBinding
 import com.orxeira.tv_browser.model.TvShowRepository
+import com.orxeira.tv_browser.ui.common.app
 import com.orxeira.tv_browser.ui.common.launchAndCollect
 
 class MainFragment : Fragment(R.layout.fragment_main) {
 
     private val viewModel: MainViewModel by viewModels {
-        MainViewModelFactory(TvShowRepository(requireActivity().application))
+        MainViewModelFactory(TvShowRepository(requireActivity().app))
     }
 
     private lateinit var mainState: MainState
@@ -33,7 +34,9 @@ class MainFragment : Fragment(R.layout.fragment_main) {
             binding.tvShows = it.tvShows
         }
 
-        viewModel.onUiReady()
+        mainState.requestLocationPermission {
+            viewModel.onUiReady()
+        }
 
     }
 }

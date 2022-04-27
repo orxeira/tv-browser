@@ -6,5 +6,5 @@ import androidx.room.RoomDatabase
 @Database(entities = [TvShow::class], version = 1, exportSchema = false)
 abstract class TvShowDatabase : RoomDatabase() {
 
-    abstract fun tvShowDao(): TvShowDAO
+    abstract fun tvShowDao(): TvShowDao
 }

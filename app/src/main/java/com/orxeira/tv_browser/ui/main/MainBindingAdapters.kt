@@ -2,7 +2,7 @@ package com.orxeira.tv_browser.ui.main
 
 import androidx.databinding.BindingAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.orxeira.tv_browser.model.TvShow
+import com.orxeira.tv_browser.model.database.TvShow
 
 @BindingAdapter("items")
 fun RecyclerView.setItems(tvShows: List<TvShow>?) {
