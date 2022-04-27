@@ -3,12 +3,11 @@ package com.orxeira.tv_browser.ui.main
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
+import com.orxeira.tv_browser.model.Error
 import com.orxeira.tv_browser.model.TvShowRepository
 import com.orxeira.tv_browser.model.database.TvShow
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.collect
+import com.orxeira.tv_browser.model.toError
+import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 
 class MainViewModel(private val tvShowRepository: TvShowRepository) : ViewModel() {
@@ -18,22 +17,24 @@ class MainViewModel(private val tvShowRepository: TvShowRepository) : ViewModel(
 
     init {
         viewModelScope.launch {
-            tvShowRepository.popularTvShows.collect { tvShows ->
-                _state.value = UiState(tvShows = tvShows)
-            }
+            tvShowRepository.popularTvShows
+                .catch { cause -> _state.update { it.copy(error = cause.toError()) } }
+                .collect { tvShows -> _state.update { UiState(tvShows = tvShows) } }
         }
     }
 
     fun onUiReady() {
         viewModelScope.launch {
-            _state.value = UiState(loading = true)
-            tvShowRepository.requestPopularTvShows()
+            _state.value = _state.value.copy(loading = true)
+            val error = tvShowRepository.requestPopularTvShows()
+            _state.update { _state.value.copy(loading = false, error = error) }
         }
     }
 
     data class UiState(
         val loading: Boolean = false,
         val tvShows: List<TvShow>? = null,
+        val error: Error? = null
     )
 }
 

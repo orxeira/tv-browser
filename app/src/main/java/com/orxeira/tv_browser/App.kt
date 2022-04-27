@@ -1,4 +1,4 @@
-package com.orxeira.tv_browser.ui
+package com.orxeira.tv_browser
 
 import android.app.Application
 import androidx.room.Room

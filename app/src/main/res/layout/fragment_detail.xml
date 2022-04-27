@@ -19,6 +19,7 @@
         tools:context=".ui.detail.DetailFragment">
 
         <com.google.android.material.appbar.AppBarLayout
+            android:id="@+id/appBarLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:fitsSystemWindows="true"
@@ -45,6 +46,7 @@
                     android:id="@+id/tvShow_detail_toolbar"
                     android:layout_width="match_parent"
                     android:layout_height="?attr/actionBarSize"
+                    app:navigationIcon="@drawable/ic_arrow_back"
                     app:title="@{tvShow.name}" />
 
             </com.google.android.material.appbar.CollapsingToolbarLayout>
@@ -66,6 +68,8 @@
                     android:id="@+id/tvShow_detail_summary"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:background="?attr/colorSurface"
                     android:padding="16dp"
                     android:text="@{tvShow.overview}"
                     android:textAppearance="@style/TextAppearance.AppCompat.Medium" />

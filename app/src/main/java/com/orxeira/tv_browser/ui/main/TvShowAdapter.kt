@@ -26,7 +26,7 @@ class TvShowAdapter(private val listener: (TvShow) -> Unit) :
 
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         private val binding = ViewTvShowBinding.bind(view)
-        fun bind(tvShow: TvShow) = with(binding) {
+        fun bind(tvShow: TvShow){
             binding.tvShow = tvShow
         }
     }

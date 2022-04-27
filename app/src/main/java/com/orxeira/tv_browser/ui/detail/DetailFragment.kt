@@ -4,16 +4,12 @@ import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.Lifecycle
-import androidx.lifecycle.lifecycleScope
-import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.navArgs
 import com.orxeira.tv_browser.R
 import com.orxeira.tv_browser.databinding.FragmentDetailBinding
 import com.orxeira.tv_browser.model.TvShowRepository
 import com.orxeira.tv_browser.ui.common.app
-import kotlinx.coroutines.flow.collect
-import kotlinx.coroutines.launch
+import com.orxeira.tv_browser.ui.common.launchAndCollect
 
 class DetailFragment : Fragment(R.layout.fragment_detail) {
 
@@ -32,10 +28,9 @@ class DetailFragment : Fragment(R.layout.fragment_detail) {
 
         binding.tvShowDetailToolbar.setNavigationOnClickListener { requireActivity().onBackPressed() }
 
-        viewLifecycleOwner.lifecycleScope.launch {
-            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
-                viewModel.state.collect { binding.tvShow = it.tvShow }
-            }
+        viewLifecycleOwner.launchAndCollect(viewModel.state) { state ->
+            if (state.tvShow != null)
+                binding.tvShow = state.tvShow
         }
     }
 }

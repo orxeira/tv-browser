@@ -3,12 +3,11 @@ package com.orxeira.tv_browser.ui.detail
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
+import com.orxeira.tv_browser.model.Error
 import com.orxeira.tv_browser.model.TvShowRepository
 import com.orxeira.tv_browser.model.database.TvShow
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.collect
+import com.orxeira.tv_browser.model.toError
+import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 
 class DetailViewModel(
@@ -16,18 +15,20 @@ class DetailViewModel(
     private val repository: TvShowRepository
 ) : ViewModel() {
 
-    init {
-        viewModelScope.launch {
-            repository.findById(tvShowId).collect {
-                _state.value = UiState(it)
-            }
-        }
-    }
-
-    class UiState(val tvShow: TvShow? = null)
+    data class UiState(val tvShow: TvShow? = null, val error: Error? = null)
 
     private val _state = MutableStateFlow(UiState())
     val state: StateFlow<UiState> = _state.asStateFlow()
+
+    init {
+        viewModelScope.launch {
+            repository.findById(tvShowId)
+                .catch { cause -> _state.update { it.copy(error = cause.toError()) } }
+                .collect { tvShow ->
+                    _state.update { UiState(tvShow) }
+                }
+        }
+    }
 }
 
 @Suppress("UNCHECKED_CAST")
