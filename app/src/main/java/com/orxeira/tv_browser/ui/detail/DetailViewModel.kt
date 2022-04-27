@@ -5,7 +5,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import com.orxeira.domain.Error
 import com.orxeira.domain.TvShow
-import com.orxeira.tv_browser.framework.toError
+import com.orxeira.tv_browser.data.toError
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 

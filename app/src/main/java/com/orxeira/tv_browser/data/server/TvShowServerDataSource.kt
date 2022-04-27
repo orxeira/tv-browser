@@ -1,10 +1,10 @@
-package com.orxeira.tv_browser.framework.server
+package com.orxeira.tv_browser.data.server
 
 import arrow.core.Either
 import com.orxeira.data.datasource.TvShowRemoteDataSource
 import com.orxeira.domain.Error
 import com.orxeira.domain.TvShow
-import com.orxeira.tv_browser.framework.tryCall
+import com.orxeira.tv_browser.data.tryCall
 
 class TvShowServerDataSource(private val apiKey: String) : TvShowRemoteDataSource {
 

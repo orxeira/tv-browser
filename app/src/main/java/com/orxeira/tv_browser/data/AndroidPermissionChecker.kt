@@ -1,4 +1,4 @@
-package com.orxeira.tv_browser.framework
+package com.orxeira.tv_browser.data
 
 import android.Manifest
 import android.app.Application

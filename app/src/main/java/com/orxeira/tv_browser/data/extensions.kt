@@ -1,4 +1,4 @@
-package com.orxeira.tv_browser.framework
+package com.orxeira.tv_browser.data
 
 import arrow.core.Either
 import arrow.core.left

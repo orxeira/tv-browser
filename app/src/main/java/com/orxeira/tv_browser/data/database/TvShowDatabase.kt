@@ -1,4 +1,4 @@
-package com.orxeira.tv_browser.framework.database
+package com.orxeira.tv_browser.data.database
 
 import androidx.room.Database
 import androidx.room.RoomDatabase

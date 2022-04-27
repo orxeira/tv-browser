@@ -1,4 +1,4 @@
-package com.orxeira.tv_browser.framework.server
+package com.orxeira.tv_browser.data.server
 
 import retrofit2.http.GET
 import retrofit2.http.Query

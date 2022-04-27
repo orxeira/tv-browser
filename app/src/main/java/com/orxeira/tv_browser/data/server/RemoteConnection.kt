@@ -1,4 +1,4 @@
-package com.orxeira.tv_browser.framework.server
+package com.orxeira.tv_browser.data.server
 
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor

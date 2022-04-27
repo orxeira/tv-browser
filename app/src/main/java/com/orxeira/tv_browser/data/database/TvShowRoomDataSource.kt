@@ -1,10 +1,10 @@
-package com.orxeira.tv_browser.framework.database
+package com.orxeira.tv_browser.data.database
 
 import com.orxeira.data.datasource.TvShowLocalDataSource
 import com.orxeira.domain.TvShow
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
-import com.orxeira.tv_browser.framework.database.TvShow as DbTvShow
+import com.orxeira.tv_browser.data.database.TvShow as DbTvShow
 
 class TvShowRoomDataSource(private val tvShowDao: TvShowDao) : TvShowLocalDataSource {
 

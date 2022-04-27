@@ -1,4 +1,4 @@
-package com.orxeira.tv_browser.framework
+package com.orxeira.tv_browser.data
 
 import android.annotation.SuppressLint
 import android.app.Application
