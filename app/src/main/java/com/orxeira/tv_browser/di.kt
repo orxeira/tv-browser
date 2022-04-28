@@ -3,13 +3,13 @@ package com.orxeira.tv_browser
 import android.app.Application
 import androidx.room.Room
 import com.orxeira.data.PermissionChecker
-import com.orxeira.data.RegionRepository
+import com.orxeira.data.LanguageRepository
 import com.orxeira.data.TvShowRepository
-import com.orxeira.data.datasource.LocationDataSource
+import com.orxeira.data.datasource.LanguageDataSource
 import com.orxeira.data.datasource.TvShowLocalDataSource
 import com.orxeira.data.datasource.TvShowRemoteDataSource
 import com.orxeira.tv_browser.data.AndroidPermissionChecker
-import com.orxeira.tv_browser.data.PlayServicesLocationDataSource
+import com.orxeira.tv_browser.data.PlayServicesLanguageDataSource
 import com.orxeira.tv_browser.data.database.TvShowDatabase
 import com.orxeira.tv_browser.data.database.TvShowRoomDataSource
 import com.orxeira.tv_browser.data.server.TvShowServerDataSource
@@ -49,14 +49,14 @@ private val appModule = module {
     factory<TvShowLocalDataSource> { TvShowRoomDataSource(get()) }
     factory<TvShowRemoteDataSource> { TvShowServerDataSource(get(named("api_key"))) }
 
-    factory<LocationDataSource> { PlayServicesLocationDataSource(get()) }
+    factory<LanguageDataSource> { PlayServicesLanguageDataSource(get()) }
     factory<PermissionChecker> { AndroidPermissionChecker(get()) }
 
     viewModel { MainViewModel(get(), get()) }
     viewModel { (id: Int) -> DetailViewModel(id, get()) }
 }
 private val dataModule = module {
-    factory { RegionRepository(get(), get()) }
+    factory { LanguageRepository(get(), get()) }
     factory { TvShowRepository(get(), get(), get()) }
 }
 private val useCasesModule = module {

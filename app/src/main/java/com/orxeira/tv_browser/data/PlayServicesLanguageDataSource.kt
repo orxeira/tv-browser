@@ -5,17 +5,17 @@ import android.app.Application
 import android.location.Geocoder
 import android.location.Location
 import com.google.android.gms.location.LocationServices
-import com.orxeira.data.datasource.LocationDataSource
+import com.orxeira.data.datasource.LanguageDataSource
 import kotlinx.coroutines.suspendCancellableCoroutine
 import kotlin.coroutines.resume
 
-class PlayServicesLocationDataSource(application: Application) : LocationDataSource {
+class PlayServicesLanguageDataSource(application: Application) : LanguageDataSource {
     private val fusedLocationClient = LocationServices.getFusedLocationProviderClient(application)
     private val geocoder = Geocoder(application)
 
 
     @SuppressLint("MissingPermission")
-    override suspend fun findLastLocation(): String? =
+    override suspend fun findLastLanguage(): String? =
         suspendCancellableCoroutine { continuation ->
             fusedLocationClient.lastLocation
                 .addOnCompleteListener {

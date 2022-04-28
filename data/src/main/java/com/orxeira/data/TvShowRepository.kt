@@ -11,7 +11,7 @@ import kotlinx.coroutines.flow.Flow
  * synchronized.
  */
 class TvShowRepository(
-    private val regionRepository: RegionRepository,
+    private val languageRepository: LanguageRepository,
     private val localDataSource: TvShowLocalDataSource,
     private val remoteDataSource: TvShowRemoteDataSource
 ) {
@@ -22,7 +22,7 @@ class TvShowRepository(
 
     suspend fun requestPopularTvShows(): Error? {
         if (localDataSource.isEmpty()) {
-            val tvShows = remoteDataSource.findTopRatedTvShows(regionRepository.findLastLanguage())
+            val tvShows = remoteDataSource.findTopRatedTvShows(languageRepository.findLastLanguage())
             tvShows.fold(ifLeft = { return it }) {
                 localDataSource.save(it)
             }

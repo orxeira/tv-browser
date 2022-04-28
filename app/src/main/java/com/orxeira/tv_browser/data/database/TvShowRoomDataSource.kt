@@ -1,7 +1,9 @@
 package com.orxeira.tv_browser.data.database
 
 import com.orxeira.data.datasource.TvShowLocalDataSource
+import com.orxeira.domain.Error
 import com.orxeira.domain.TvShow
+import com.orxeira.tv_browser.data.tryCall
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import com.orxeira.tv_browser.data.database.TvShow as DbTvShow
@@ -14,9 +16,12 @@ class TvShowRoomDataSource(private val tvShowDao: TvShowDao) : TvShowLocalDataSo
 
     override fun findById(id: Int): Flow<TvShow> = tvShowDao.findById(id).map { it.toDomainModel() }
 
-    override suspend fun save(tvShows: List<TvShow>) {
+    override suspend fun save(tvShows: List<TvShow>): Error? = tryCall {
         tvShowDao.insertTvShows(tvShows.fromDomainModel())
-    }
+    }.fold(
+        ifLeft = { it },
+        ifRight = { null }
+    )
 }
 
 private fun List<DbTvShow>.toDomainModel(): List<TvShow> = map { it.toDomainModel() }

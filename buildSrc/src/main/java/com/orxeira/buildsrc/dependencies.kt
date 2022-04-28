@@ -92,4 +92,9 @@ object Libs {
         private const val version = "4.13.2"
         const val junit = "junit:junit:$version"
     }
+
+    object Mockito {
+        const val inline = "org.mockito:mockito-inline:4.5.1"
+        const val kotlin = "org.mockito.kotlin:mockito-kotlin:4.0.0"
+    }
 }

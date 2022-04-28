@@ -1,5 +1,6 @@
 package com.orxeira.data.datasource
 
+import com.orxeira.domain.Error
 import com.orxeira.domain.TvShow
 import kotlinx.coroutines.flow.Flow
 
@@ -8,5 +9,5 @@ interface TvShowLocalDataSource {
 
     suspend fun isEmpty(): Boolean
     fun findById(id: Int): Flow<TvShow>
-    suspend fun save(tvShows: List<TvShow>)
+    suspend fun save(tvShows: List<TvShow>): Error?
 }
