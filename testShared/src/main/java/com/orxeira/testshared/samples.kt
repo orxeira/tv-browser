@@ -1,8 +1,8 @@
-package com.orxeira.usecases
+package com.orxeira.testshared
 
 import com.orxeira.domain.TvShow
 
-internal val sampleTvShow = TvShow(
+val sampleTvShow = TvShow(
     0,
     "Name",
     "Overview",

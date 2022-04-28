@@ -12,6 +12,7 @@ object Libs {
         object Coroutines {
             private const val version = "1.6.1"
             const val core = "org.jetbrains.kotlinx:kotlinx-coroutines-core:$version"
+            const val test = "org.jetbrains.kotlinx:kotlinx-coroutines-test:$version"
         }
     }
 
@@ -97,4 +98,6 @@ object Libs {
         const val inline = "org.mockito:mockito-inline:4.5.1"
         const val kotlin = "org.mockito.kotlin:mockito-kotlin:4.0.0"
     }
+
+    const val turbine = "app.cash.turbine:turbine:0.7.0"
 }

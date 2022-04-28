@@ -1,5 +1,6 @@
 package com.orxeira.usecases
 
+import com.orxeira.testshared.sampleTvShow
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.runBlocking
 import org.junit.Assert.assertEquals

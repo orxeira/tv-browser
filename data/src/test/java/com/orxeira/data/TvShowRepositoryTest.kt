@@ -3,7 +3,7 @@ package com.orxeira.data
 import arrow.core.right
 import com.orxeira.data.datasource.TvShowLocalDataSource
 import com.orxeira.data.datasource.TvShowRemoteDataSource
-import com.orxeira.domain.TvShow
+import com.orxeira.testshared.sampleTvShow
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.runBlocking
 import org.junit.Assert.assertEquals
@@ -70,13 +70,3 @@ class TvShowRepositoryTest {
     }
 
 }
-
-private val sampleTvShow = TvShow(
-    0,
-    "Name",
-    "Overview",
-    "posterPath",
-    "backdropPath",
-    4.5,
-    "01/01/1990",
-)
