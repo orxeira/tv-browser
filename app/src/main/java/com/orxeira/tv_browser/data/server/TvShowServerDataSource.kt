@@ -26,8 +26,7 @@ private fun RemoteTvShow.toDomainModel(): TvShow =
         name,
         overview,
         "https://image.tmdb.org/t/p/w185/$posterPath",
-        backdropPath?.let { "https://image.tmdb.org/t/p/w780/$it" } ?: "",
+        "https://image.tmdb.org/t/p/w780/${backdropPath ?: posterPath}",
         voteAverage,
         firstAirDate,
     )
-
